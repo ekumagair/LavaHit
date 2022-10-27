@@ -5,9 +5,12 @@ using UnityEngine;
 public class BolaDeLavaScript : MonoBehaviour
 {
     public GameObject chama;
+    public GameObject ativarFisicaTrigger;
+    public GameObject criarNoImpacto;
 
     Rigidbody rb;
     JogadorScript scriptDojogador;
+    float velocidadeDeImpulso;
     public bool impulsionado = false;
 
     void Start()
@@ -29,7 +32,8 @@ public class BolaDeLavaScript : MonoBehaviour
 
     public void Clicou()
     {
-        rb.velocity += Vector3.forward * (100f * DetectorDeClique.tempoSegurandoMouse);
+        rb.velocity += Vector3.forward * (120f * DetectorDeClique.tempoSegurandoMouse);
+        velocidadeDeImpulso = rb.velocity.magnitude;
         chama.SetActive(true);
         impulsionado = true;
     }
@@ -39,6 +43,24 @@ public class BolaDeLavaScript : MonoBehaviour
         if(other.gameObject.tag == "Deletar")
         {
             Destroy(gameObject, 3f);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Obstaculo" && impulsionado == true)
+        {
+            Debug.Log("Colidiu com obstáculo");
+            collision.gameObject.GetComponent<Rigidbody>().useGravity = true;
+            collision.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            collision.gameObject.GetComponent<Rigidbody>().velocity += Vector3.forward;
+
+            Instantiate(criarNoImpacto, transform.position, transform.rotation);
+
+            if (velocidadeDeImpulso > 80)
+            {
+                Instantiate(ativarFisicaTrigger, transform.position, new Quaternion(0, 0, 0, 0));
+            }
         }
     }
 }
