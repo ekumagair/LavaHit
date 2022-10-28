@@ -1,12 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class DetectorDeClique : MonoBehaviour
 {
     public LayerMask podeClicarMask;
     public GameObject[] efeitoImpacto;
     public CameraShake scriptCameraShake;
+    public GameObject barraDeForcaFundo;
+    public GameObject barraDeForca;
+    public GameObject barraDeForcaEfeito;
+
     JogadorScript scriptJogador;
 
     float mainCamFovPadrao;
@@ -19,13 +25,15 @@ public class DetectorDeClique : MonoBehaviour
 
     void Start()
     {
+        tempoSegurandoMouse = 0f;
         mainCamFovPadrao = Camera.main.fieldOfView;
         scriptJogador = GameObject.FindGameObjectWithTag("Player").GetComponent<JogadorScript>();
+        barraDeForcaEfeito.SetActive(false);
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonUp(0) && CanvasScript.jogando == true && scriptJogador.vida > 0)
+        if (Input.GetMouseButtonUp(0) && CanvasScript.jogando == true && scriptJogador.vida > 0 && JogadorScript.levandoDano == false)
         {
             // Soltou botão do mouse.
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -49,7 +57,7 @@ public class DetectorDeClique : MonoBehaviour
 
                     scriptDoObj.Clicou();
                     scriptJogador.velocidade += 0.25f;
-                    scriptCameraShake.ShakeCamera(0.3f, tempoSegurandoMouse / 4);
+                    scriptCameraShake.ShakeCamera(0.25f, tempoSegurandoMouse / 5);
                 }
             }
 
@@ -67,6 +75,19 @@ public class DetectorDeClique : MonoBehaviour
             {
                 Camera.main.fieldOfView -= Time.deltaTime * 30f;
             }
+
+            barraDeForcaFundo.SetActive(true);
+            barraDeForcaFundo.transform.position = Input.mousePosition + (Vector3.down * 60f);
+            barraDeForca.transform.localScale = new Vector3(tempoSegurandoMouse / tempoMaxSegurandoMouse, 1, 1);
+
+            if(tempoSegurandoMouse >= tempoMaxSegurandoMouse)
+            {
+                barraDeForcaEfeito.SetActive(true);
+            }
+            else
+            {
+                barraDeForcaEfeito.SetActive(false);
+            }
         }
         else
         {
@@ -75,6 +96,8 @@ public class DetectorDeClique : MonoBehaviour
             {
                 Camera.main.fieldOfView += Time.deltaTime * 80f;
             }
+
+            barraDeForcaFundo.SetActive(false);
         }
     }
 }

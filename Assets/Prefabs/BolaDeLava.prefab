@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 782195197135720239}
   - component: {fileID: 782195197135720400}
   - component: {fileID: 782195197135720238}
+  - component: {fileID: 1927192141130340855}
+  - component: {fileID: 756195319141282486}
   m_Layer: 6
   m_Name: BolaDeLava
   m_TagString: Untagged
@@ -80,7 +82,123 @@ MonoBehaviour:
   chama: {fileID: 356445115170095850}
   ativarFisicaTrigger: {fileID: 9051053641876255656, guid: 57135ee10d8143249b4ab30095fb7561, type: 3}
   criarNoImpacto: {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+  impulsoClip:
+  - {fileID: 8300000, guid: 0fa93aa4e01ecc3439ec405734be2643, type: 3}
+  - {fileID: 8300000, guid: 097bd21dae8d5e74bb482e8386cf30af, type: 3}
+  - {fileID: 8300000, guid: 98effcc74eb7078409679fc06c2ccf93, type: 3}
+  impactoClip:
+  - {fileID: 8300000, guid: ba5ba82685aa4b346920711a2ae9a5c5, type: 3}
+  - {fileID: 8300000, guid: aa022a3f1a15bba4497d90c089f12e15, type: 3}
   impulsionado: 0
+--- !u!114 &1927192141130340855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782195197135720402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91dd04e977692434d815e56ee8311fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  posZDeleteOffset: 1
+--- !u!82 &756195319141282486
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782195197135720402}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &782195197473886096
 GameObject:
   m_ObjectHideFlags: 0

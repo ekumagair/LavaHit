@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2556279025196744599}
   - component: {fileID: 8194127085262143749}
   - component: {fileID: 4588194706236568674}
+  - component: {fileID: 7321672387979895231}
   m_Layer: 7
   m_Name: PedraComFisica
   m_TagString: Obstaculo
@@ -115,3 +116,16 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: ee344ff51e4ffbb41949e122c861e46d, type: 3}
+--- !u!114 &7321672387979895231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2556279025194505625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91dd04e977692434d815e56ee8311fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  posZDeleteOffset: 1

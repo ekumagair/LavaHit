@@ -7,8 +7,11 @@ public class BolaDeLavaScript : MonoBehaviour
     public GameObject chama;
     public GameObject ativarFisicaTrigger;
     public GameObject criarNoImpacto;
+    public AudioClip[] impulsoClip;
+    public AudioClip[] impactoClip;
 
     Rigidbody rb;
+    AudioSource audioSource;
     JogadorScript scriptDojogador;
     float velocidadeDeImpulso;
     public bool impulsionado = false;
@@ -18,24 +21,19 @@ public class BolaDeLavaScript : MonoBehaviour
         scriptDojogador = GameObject.FindGameObjectWithTag("Player").GetComponent<JogadorScript>();
         rb = GetComponent<Rigidbody>();
         rb.velocity = Vector3.up * Random.Range(9f, 12f) + Vector3.forward * scriptDojogador.velocidade;
+        audioSource = GetComponent<AudioSource>();
         chama.SetActive(false);
-    }
-
-    void Update()
-    {
-        // Destruir o objeto se ele cair do mundo.
-        if(transform.position.y < -10)
-        {
-            Destroy(gameObject);
-        }
     }
 
     public void Clicou()
     {
+        // Bola foi clicada. Mudar velocidade com base no tempo que o jogador segurou o botão do mouse.
         rb.velocity += Vector3.forward * (120f * DetectorDeClique.tempoSegurandoMouse);
         velocidadeDeImpulso = rb.velocity.magnitude;
         chama.SetActive(true);
         impulsionado = true;
+
+        audioSource.PlayOneShot(impulsoClip[Random.Range(0, impulsoClip.Length)]);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -59,7 +57,15 @@ public class BolaDeLavaScript : MonoBehaviour
 
             if (velocidadeDeImpulso > 80)
             {
+                // Se a bola for mais rápida, é mais efetiva.
                 Instantiate(ativarFisicaTrigger, transform.position, new Quaternion(0, 0, 0, 0));
+                audioSource.PlayOneShot(impactoClip[Random.Range(0, impactoClip.Length)], 0.1f);
+                velocidadeDeImpulso = 0f;
+
+                if(JogadorScript.levandoDano == false)
+                {
+                    scriptDojogador.scriptCameraShake.ShakeCamera(0.15f, 0.15f);
+                }
             }
         }
     }

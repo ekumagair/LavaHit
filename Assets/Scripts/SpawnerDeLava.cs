@@ -18,7 +18,8 @@ public class SpawnerDeLava : MonoBehaviour
 
     IEnumerator Criar()
     {
-        yield return new WaitForSeconds(Random.Range(tempoMin, tempoMax));
+        // Criar bolas de lava, com base no tempo aleatório e na velocidade do jogador.
+        yield return new WaitForSeconds(Random.Range(tempoMin, tempoMax) / (scriptJogador.velocidade / 9));
 
         if (JogadorScript.levandoDano == false && JogadorScript.pertoDeBarreira == false && CanvasScript.jogando == true && scriptJogador.vida > 0)
         {
