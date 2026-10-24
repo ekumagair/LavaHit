@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -65,7 +64,7 @@ public class JogadorScript : MonoBehaviour
         }
 
         // Gerar cenário.
-        if(transform.position.z > proximaDistancia)
+        if (transform.position.z > proximaDistancia)
         {
             for (int i = 0; i < distanciaDeCriacao; i++)
             {
@@ -76,7 +75,7 @@ public class JogadorScript : MonoBehaviour
         }
 
         // Não gerar bolas de lava se estiver muito perto de uma barreira.
-        if(Physics.Raycast(transform.position, transform.forward, distanciaMinimaDaBarreira, layerBarreira))
+        if (Physics.Raycast(transform.position, transform.forward, distanciaMinimaDaBarreira, layerBarreira))
         {
             pertoDeBarreira = true;
         }
@@ -87,7 +86,7 @@ public class JogadorScript : MonoBehaviour
         }
 
         // Perder.
-        if(vida <= 0 && perdeu == false)
+        if (vida <= 0 && perdeu == false)
         {
             perdeu = true;
             StartCoroutine(Perdeu());
@@ -119,7 +118,7 @@ public class JogadorScript : MonoBehaviour
         // Contar tempo.
         yield return new WaitForSeconds(1);
 
-        if(CanvasScript.jogando == true)
+        if (CanvasScript.jogando == true)
         {
             if (levandoDano == false && invulneravel == false)
             {

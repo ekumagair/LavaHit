@@ -20,7 +20,7 @@ public class CriarBarreiras : MonoBehaviour
 
     IEnumerator Criar()
     {
-        while(CanvasScript.jogando == false)
+        while (CanvasScript.jogando == false)
         {
             // Esperar até o jogador clicar no botão de iniciar.
             yield return new WaitForEndOfFrame();

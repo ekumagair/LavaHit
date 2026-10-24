@@ -38,7 +38,7 @@ public class BolaDeLavaScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Deletar")
+        if (other.gameObject.tag == "Deletar")
         {
             Destroy(gameObject, 3f);
         }
@@ -62,7 +62,7 @@ public class BolaDeLavaScript : MonoBehaviour
                 audioSource.PlayOneShot(impactoClip[Random.Range(0, impactoClip.Length)], 0.1f);
                 velocidadeDeImpulso = 0f;
 
-                if(JogadorScript.levandoDano == false)
+                if (JogadorScript.levandoDano == false)
                 {
                     scriptDojogador.scriptCameraShake.ShakeCamera(0.15f, 0.15f);
                 }

@@ -16,7 +16,7 @@ public class SpawnerDeLava : MonoBehaviour
         StartCoroutine(Criar());
     }
 
-    IEnumerator Criar()
+    private IEnumerator Criar()
     {
         // Criar bolas de lava, com base no tempo aleatório e na velocidade do jogador.
         yield return new WaitForSeconds(Random.Range(tempoMin, tempoMax) / (scriptJogador.velocidade / 9));

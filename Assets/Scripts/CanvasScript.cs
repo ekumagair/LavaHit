@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -27,13 +28,13 @@ public class CanvasScript : MonoBehaviour
 
         MostrarRecorde();
 
-        if(JogadorScript.jogouQuantasVezes > 0)
+        if (JogadorScript.jogouQuantasVezes > 0)
         {
             Destroy(Instantiate(fadeOut, transform), 1f);
         }
 
         // Carregar recorde salvo.
-        if(PlayerPrefs.HasKey("recorde_minutos"))
+        if (PlayerPrefs.HasKey("recorde_minutos"))
         {
             JogadorScript.tempoMinutosRecorde = PlayerPrefs.GetInt("recorde_minutos");
             JogadorScript.tempoSegundosRecorde = PlayerPrefs.GetInt("recorde_segundos");
@@ -43,12 +44,12 @@ public class CanvasScript : MonoBehaviour
 
     void Update()
     {
-        if(jogando == true)
+        if (jogando == true)
         {
             textVida.text = scriptJogador.vida.ToString();
             textTempo.text = JogadorScript.tempoMinutos.ToString() + " : ";
 
-            if(JogadorScript.tempoSegundos < 10)
+            if (JogadorScript.tempoSegundos < 10)
             {
                 textTempo.text += "0" + JogadorScript.tempoSegundos.ToString();
             }
@@ -66,7 +67,7 @@ public class CanvasScript : MonoBehaviour
         else
         {
             // Deletar dados salvos.
-            if(Input.GetKeyDown(KeyCode.Delete))
+            if (Input.GetKeyDown(KeyCode.Delete))
             {
                 JogadorScript.tempoMinutosRecorde = 0;
                 JogadorScript.tempoSegundosRecorde = 0;
@@ -77,7 +78,7 @@ public class CanvasScript : MonoBehaviour
             }
 
             // Sair do jogo com esc.
-            if(Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
                 Sair();
             }
@@ -91,12 +92,17 @@ public class CanvasScript : MonoBehaviour
 
     public void Sair()
     {
+#if !UNITY_EDITOR && (UNITY_STANDALONE || UNITY_WEBGL)
         Application.Quit();
+#else
+        EditorApplication.isPlaying = false;
+#endif
     }
 
-    void MostrarRecorde()
+    private void MostrarRecorde()
     {
         textTempoRecorde.text = "Tempo recorde: " + JogadorScript.tempoMinutosRecorde + " : ";
+
         if (JogadorScript.tempoSegundosRecorde < 10)
         {
             textTempoRecorde.text += "0" + JogadorScript.tempoSegundosRecorde.ToString();
@@ -107,9 +113,10 @@ public class CanvasScript : MonoBehaviour
         }
     }
 
-    IEnumerator IniciarCoroutine()
+    private IEnumerator IniciarCoroutine()
     {
         yield return new WaitForSeconds(0.2f);
+
         menuRoot.SetActive(false);
         gameplayRoot.SetActive(true);
         jogando = true;

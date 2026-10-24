@@ -71,7 +71,7 @@ public class DetectorDeClique : MonoBehaviour
                 tempoSegurandoMouse += Time.deltaTime;
             }
 
-            if(Camera.main.fieldOfView > mainCamFovPadrao - 4)
+            if (Camera.main.fieldOfView > mainCamFovPadrao - 4)
             {
                 Camera.main.fieldOfView -= Time.deltaTime * 30f;
             }
@@ -80,7 +80,7 @@ public class DetectorDeClique : MonoBehaviour
             barraDeForcaFundo.transform.position = Input.mousePosition + (Vector3.down * 60f);
             barraDeForca.transform.localScale = new Vector3(tempoSegurandoMouse / tempoMaxSegurandoMouse, 1, 1);
 
-            if(tempoSegurandoMouse >= tempoMaxSegurandoMouse)
+            if (tempoSegurandoMouse >= tempoMaxSegurandoMouse)
             {
                 barraDeForcaEfeito.SetActive(true);
             }

@@ -16,7 +16,7 @@ public class ApagarAutomaticamente : MonoBehaviour
     void Update()
     {
         // Destruir o objeto se ele estiver atrás do jogador;
-        if(transform.position.z < jogadorTransform.position.z - posZDeleteOffset)
+        if (transform.position.z < jogadorTransform.position.z - posZDeleteOffset)
         {
             Destroy(gameObject);
         }
