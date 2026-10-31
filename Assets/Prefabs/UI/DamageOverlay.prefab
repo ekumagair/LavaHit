@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6130383080479973489}
   - component: {fileID: 6130383080479973495}
   m_Layer: 5
-  m_Name: DanoOverlay
+  m_Name: DamageOverlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

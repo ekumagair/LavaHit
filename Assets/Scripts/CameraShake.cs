@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
-    Transform cameraParent;
+    private Transform cameraParent;
 
-    float shakeDuracao = 1f;
-    float shakeQuantidade = 0.5f;
+    private float shakeDuracao = 1f;
+    private float shakeQuantidade = 0.5f;
 
-    float shakeTempoAtual = 0;
+    private float shakeTempoAtual = 0;
 
     void Start()
     {
@@ -18,7 +18,7 @@ public class CameraShake : MonoBehaviour
 
     void Update()
     {
-        Efeito();
+        CheckEffect();
     }
 
     public void ShakeCamera(float duration, float amount)
@@ -31,7 +31,7 @@ public class CameraShake : MonoBehaviour
         }
     }
 
-    void Efeito()
+    void CheckEffect()
     {
         if (shakeTempoAtual > 0)
         {

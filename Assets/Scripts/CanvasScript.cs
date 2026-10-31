@@ -16,19 +16,19 @@ public class CanvasScript : MonoBehaviour
     public TextMeshProUGUI textTempo;
     public TextMeshProUGUI textVida;
 
-    JogadorScript scriptJogador;
+    PlayerScript scriptJogador;
 
     public static bool jogando = false;
 
     void Start()
     {
-        scriptJogador = GameObject.FindGameObjectWithTag("Player").GetComponent<JogadorScript>();
+        scriptJogador = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         jogando = false;
         gameplayRoot.SetActive(false);
 
         MostrarRecorde();
 
-        if (JogadorScript.jogouQuantasVezes > 0)
+        if (PlayerScript.jogouQuantasVezes > 0)
         {
             Destroy(Instantiate(fadeOut, transform), 1f);
         }
@@ -36,8 +36,8 @@ public class CanvasScript : MonoBehaviour
         // Carregar recorde salvo.
         if (PlayerPrefs.HasKey("recorde_minutos"))
         {
-            JogadorScript.tempoMinutosRecorde = PlayerPrefs.GetInt("recorde_minutos");
-            JogadorScript.tempoSegundosRecorde = PlayerPrefs.GetInt("recorde_segundos");
+            PlayerScript.tempoMinutosRecorde = PlayerPrefs.GetInt("recorde_minutos");
+            PlayerScript.tempoSegundosRecorde = PlayerPrefs.GetInt("recorde_segundos");
             PlayerPrefs.Save();
         }
     }
@@ -47,15 +47,15 @@ public class CanvasScript : MonoBehaviour
         if (jogando == true)
         {
             textVida.text = scriptJogador.vida.ToString();
-            textTempo.text = JogadorScript.tempoMinutos.ToString() + " : ";
+            textTempo.text = PlayerScript.tempoMinutos.ToString() + " : ";
 
-            if (JogadorScript.tempoSegundos < 10)
+            if (PlayerScript.tempoSegundos < 10)
             {
-                textTempo.text += "0" + JogadorScript.tempoSegundos.ToString();
+                textTempo.text += "0" + PlayerScript.tempoSegundos.ToString();
             }
             else
             {
-                textTempo.text += JogadorScript.tempoSegundos.ToString();
+                textTempo.text += PlayerScript.tempoSegundos.ToString();
             }
 
             // Voltar para o menu com esc.
@@ -69,8 +69,8 @@ public class CanvasScript : MonoBehaviour
             // Deletar dados salvos.
             if (Input.GetKeyDown(KeyCode.Delete))
             {
-                JogadorScript.tempoMinutosRecorde = 0;
-                JogadorScript.tempoSegundosRecorde = 0;
+                PlayerScript.tempoMinutosRecorde = 0;
+                PlayerScript.tempoSegundosRecorde = 0;
                 PlayerPrefs.SetInt("recorde_minutos", 0);
                 PlayerPrefs.SetInt("recorde_segundos", 0);
                 PlayerPrefs.Save();
@@ -101,15 +101,15 @@ public class CanvasScript : MonoBehaviour
 
     private void MostrarRecorde()
     {
-        textTempoRecorde.text = "Tempo recorde: " + JogadorScript.tempoMinutosRecorde + " : ";
+        textTempoRecorde.text = "Tempo recorde: " + PlayerScript.tempoMinutosRecorde + " : ";
 
-        if (JogadorScript.tempoSegundosRecorde < 10)
+        if (PlayerScript.tempoSegundosRecorde < 10)
         {
-            textTempoRecorde.text += "0" + JogadorScript.tempoSegundosRecorde.ToString();
+            textTempoRecorde.text += "0" + PlayerScript.tempoSegundosRecorde.ToString();
         }
         else
         {
-            textTempoRecorde.text += JogadorScript.tempoSegundosRecorde.ToString();
+            textTempoRecorde.text += PlayerScript.tempoSegundosRecorde.ToString();
         }
     }
 
@@ -120,6 +120,6 @@ public class CanvasScript : MonoBehaviour
         menuRoot.SetActive(false);
         gameplayRoot.SetActive(true);
         jogando = true;
-        JogadorScript.jogouQuantasVezes++;
+        PlayerScript.jogouQuantasVezes++;
     }
 }

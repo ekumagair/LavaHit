@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2068319577016984973}
   - component: {fileID: 2383737873153005727}
   m_Layer: 0
-  m_Name: Chao
+  m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

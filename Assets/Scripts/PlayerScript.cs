@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class JogadorScript : MonoBehaviour
+public class PlayerScript : MonoBehaviour
 {
     public float velocidade = 8f;
     public int vida;
@@ -107,7 +107,7 @@ public class JogadorScript : MonoBehaviour
         if (levandoDano == false)
         {
             velocidade += 2;
-            Debug.Log("Aumentou a velocidade para " + velocidade);
+            //Debug.Log("Aumentou a velocidade para " + velocidade);
         }
 
         StartCoroutine(AumentarVelocidade());
@@ -178,10 +178,12 @@ public class JogadorScript : MonoBehaviour
 
     IEnumerator LevarDano()
     {
+        //Debug.Log("Levou dano");
+
         levandoDano = true;
         invulneravel = true;
-        Debug.Log("Levou dano");
-        DetectorDeClique.tempoSegurandoMouse = 0f;
+        
+        ClickManager.tempoSegurandoMouse = 0f;
         scriptCameraShake.ShakeCamera(1.5f, 0.3f);
         velocidade *= 0.4f;
         vida--;

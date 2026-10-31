@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class DetectorDeClique : MonoBehaviour
+public class ClickManager : MonoBehaviour
 {
     public LayerMask podeClicarMask;
     public GameObject[] efeitoImpacto;
@@ -13,7 +13,7 @@ public class DetectorDeClique : MonoBehaviour
     public GameObject barraDeForca;
     public GameObject barraDeForcaEfeito;
 
-    JogadorScript scriptJogador;
+    PlayerScript scriptJogador;
 
     float mainCamFovPadrao;
 
@@ -27,13 +27,13 @@ public class DetectorDeClique : MonoBehaviour
     {
         tempoSegurandoMouse = 0f;
         mainCamFovPadrao = Camera.main.fieldOfView;
-        scriptJogador = GameObject.FindGameObjectWithTag("Player").GetComponent<JogadorScript>();
+        scriptJogador = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         barraDeForcaEfeito.SetActive(false);
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonUp(0) && CanvasScript.jogando == true && scriptJogador.vida > 0 && JogadorScript.levandoDano == false)
+        if (Input.GetMouseButtonUp(0) && CanvasScript.jogando == true && scriptJogador.vida > 0 && PlayerScript.levandoDano == false)
         {
             // Soltou botão do mouse.
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -41,8 +41,8 @@ public class DetectorDeClique : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, 100, podeClicarMask))
             {
-                Debug.Log("Clicou com força " + tempoSegurandoMouse);
-                BolaDeLavaScript scriptDoObj = hit.collider.gameObject.GetComponent<BolaDeLavaScript>();
+                //Debug.Log("Clicou com força " + tempoSegurandoMouse);
+                LavaBall scriptDoObj = hit.collider.gameObject.GetComponent<LavaBall>();
 
                 if (scriptDoObj.impulsionado == false)
                 {
@@ -63,7 +63,7 @@ public class DetectorDeClique : MonoBehaviour
 
             tempoSegurandoMouse = 0f;
         }
-        else if (Input.GetMouseButton(0) && JogadorScript.levandoDano == false && CanvasScript.jogando == true && scriptJogador.vida > 0)
+        else if (Input.GetMouseButton(0) && PlayerScript.levandoDano == false && CanvasScript.jogando == true && scriptJogador.vida > 0)
         {
             // Segurando botão do mouse.
             if (tempoSegurandoMouse < tempoMaxSegurandoMouse)

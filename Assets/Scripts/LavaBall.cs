@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BolaDeLavaScript : MonoBehaviour
+public class LavaBall : MonoBehaviour
 {
     public GameObject chama;
     public GameObject ativarFisicaTrigger;
@@ -12,13 +12,13 @@ public class BolaDeLavaScript : MonoBehaviour
 
     Rigidbody rb;
     AudioSource audioSource;
-    JogadorScript scriptDojogador;
+    PlayerScript scriptDojogador;
     float velocidadeDeImpulso;
     public bool impulsionado = false;
 
     void Start()
     {
-        scriptDojogador = GameObject.FindGameObjectWithTag("Player").GetComponent<JogadorScript>();
+        scriptDojogador = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         rb = GetComponent<Rigidbody>();
         rb.velocity = Vector3.up * Random.Range(9f, 12f) + Vector3.forward * scriptDojogador.velocidade;
         audioSource = GetComponent<AudioSource>();
@@ -28,7 +28,7 @@ public class BolaDeLavaScript : MonoBehaviour
     public void Clicou()
     {
         // Bola foi clicada. Mudar velocidade com base no tempo que o jogador segurou o botão do mouse.
-        rb.velocity += Vector3.forward * (120f * DetectorDeClique.tempoSegurandoMouse);
+        rb.velocity += Vector3.forward * (120f * ClickManager.tempoSegurandoMouse);
         velocidadeDeImpulso = rb.velocity.magnitude;
         chama.SetActive(true);
         impulsionado = true;
@@ -48,7 +48,8 @@ public class BolaDeLavaScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Obstaculo" && impulsionado == true)
         {
-            Debug.Log("Colidiu com obstáculo");
+            //Debug.Log("Colidiu com obstáculo");
+
             collision.gameObject.GetComponent<Rigidbody>().useGravity = true;
             collision.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             collision.gameObject.GetComponent<Rigidbody>().velocity += Vector3.forward;
@@ -62,7 +63,7 @@ public class BolaDeLavaScript : MonoBehaviour
                 audioSource.PlayOneShot(impactoClip[Random.Range(0, impactoClip.Length)], 0.1f);
                 velocidadeDeImpulso = 0f;
 
-                if (JogadorScript.levandoDano == false)
+                if (PlayerScript.levandoDano == false)
                 {
                     scriptDojogador.scriptCameraShake.ShakeCamera(0.15f, 0.15f);
                 }

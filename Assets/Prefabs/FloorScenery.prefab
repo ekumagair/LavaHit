@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8453939407065195840}
   - component: {fileID: 2825225050033182580}
   m_Layer: 0
-  m_Name: ChaoComCenario
+  m_Name: FloorScenery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

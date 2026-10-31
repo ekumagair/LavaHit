@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CriarBarreiras : MonoBehaviour
+public class BarrierSpawner : MonoBehaviour
 {
     public GameObject[] barreiraPrefab;
     public float distancia;
     public float delay;
 
     GameObject jogador;
-    JogadorScript jogadorScript;
+    PlayerScript jogadorScript;
 
     void Start()
     {
         jogador = GameObject.FindGameObjectWithTag("Player");
-        jogadorScript = jogador.GetComponent<JogadorScript>();
+        jogadorScript = jogador.GetComponent<PlayerScript>();
         StartCoroutine(Criar());
     }
 
