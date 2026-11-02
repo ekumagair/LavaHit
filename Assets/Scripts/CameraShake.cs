@@ -6,10 +6,9 @@ public class CameraShake : MonoBehaviour
 {
     private Transform cameraParent;
 
-    private float shakeDuracao = 1f;
-    private float shakeQuantidade = 0.5f;
-
-    private float shakeTempoAtual = 0;
+    private float _shakeDuration = 1f;
+    private float _shakeAmount = 0.5f;
+    private float _shakeTimer = 0;
 
     void Start()
     {
@@ -23,24 +22,24 @@ public class CameraShake : MonoBehaviour
 
     public void ShakeCamera(float duration, float amount)
     {
-        if (shakeTempoAtual <= 0)
+        if (_shakeTimer <= 0)
         {
-            shakeDuracao = duration;
-            shakeQuantidade = amount;
-            shakeTempoAtual = shakeDuracao;
+            _shakeDuration = duration;
+            _shakeAmount = amount;
+            _shakeTimer = _shakeDuration;
         }
     }
 
     void CheckEffect()
     {
-        if (shakeTempoAtual > 0)
+        if (_shakeTimer > 0)
         {
-            transform.position = cameraParent.position + Random.insideUnitSphere * shakeQuantidade;
-            shakeTempoAtual -= Time.deltaTime;
+            transform.position = cameraParent.position + Random.insideUnitSphere * _shakeAmount;
+            _shakeTimer -= Time.deltaTime;
         }
         else
         {
-            shakeTempoAtual = 0f;
+            _shakeTimer = 0f;
             transform.position = cameraParent.position;
         }
     }

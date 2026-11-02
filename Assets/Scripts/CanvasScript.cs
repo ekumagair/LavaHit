@@ -8,27 +8,30 @@ using UnityEngine.UI;
 
 public class CanvasScript : MonoBehaviour
 {
-    public GameObject menuRoot;
-    public GameObject gameplayRoot;
+    [Header("References")]
     public GameObject fadeOut;
 
+    [Header("Components")]
+    public GameObject menuRoot;
+    public GameObject gameplayRoot;
+
+    [Header("Text")]
+    public TextMeshProUGUI textVersion;
     public TextMeshProUGUI textTempoRecorde;
     public TextMeshProUGUI textTempo;
     public TextMeshProUGUI textVida;
 
-    PlayerScript scriptJogador;
-
-    public static bool jogando = false;
+    private PlayerScript _playerScript;
 
     void Start()
     {
-        scriptJogador = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
-        jogando = false;
+        _playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        PlayerScript.playing = false;
         gameplayRoot.SetActive(false);
 
-        MostrarRecorde();
+        ShowMainMenuText();
 
-        if (PlayerScript.jogouQuantasVezes > 0)
+        if (PlayerScript.gamesAmount > 0)
         {
             Destroy(Instantiate(fadeOut, transform), 1f);
         }
@@ -36,26 +39,26 @@ public class CanvasScript : MonoBehaviour
         // Carregar recorde salvo.
         if (PlayerPrefs.HasKey("recorde_minutos"))
         {
-            PlayerScript.tempoMinutosRecorde = PlayerPrefs.GetInt("recorde_minutos");
-            PlayerScript.tempoSegundosRecorde = PlayerPrefs.GetInt("recorde_segundos");
+            PlayerScript.timeMinutesRecord = PlayerPrefs.GetInt("recorde_minutos");
+            PlayerScript.timeSecondsRecord = PlayerPrefs.GetInt("recorde_segundos");
             PlayerPrefs.Save();
         }
     }
 
     void Update()
     {
-        if (jogando == true)
+        if (PlayerScript.playing == true)
         {
-            textVida.text = scriptJogador.vida.ToString();
-            textTempo.text = PlayerScript.tempoMinutos.ToString() + " : ";
+            textVida.text = _playerScript.vida.ToString();
+            textTempo.text = PlayerScript.timeMinutes.ToString() + " : ";
 
-            if (PlayerScript.tempoSegundos < 10)
+            if (PlayerScript.timeSeconds < 10)
             {
-                textTempo.text += "0" + PlayerScript.tempoSegundos.ToString();
+                textTempo.text += "0" + PlayerScript.timeSeconds.ToString();
             }
             else
             {
-                textTempo.text += PlayerScript.tempoSegundos.ToString();
+                textTempo.text += PlayerScript.timeSeconds.ToString();
             }
 
             // Voltar para o menu com esc.
@@ -69,12 +72,12 @@ public class CanvasScript : MonoBehaviour
             // Deletar dados salvos.
             if (Input.GetKeyDown(KeyCode.Delete))
             {
-                PlayerScript.tempoMinutosRecorde = 0;
-                PlayerScript.tempoSegundosRecorde = 0;
+                PlayerScript.timeMinutesRecord = 0;
+                PlayerScript.timeSecondsRecord = 0;
                 PlayerPrefs.SetInt("recorde_minutos", 0);
                 PlayerPrefs.SetInt("recorde_segundos", 0);
                 PlayerPrefs.Save();
-                MostrarRecorde();
+                ShowMainMenuText();
             }
 
             // Sair do jogo com esc.
@@ -90,6 +93,32 @@ public class CanvasScript : MonoBehaviour
         StartCoroutine(IniciarCoroutine());
     }
 
+    private IEnumerator IniciarCoroutine()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        menuRoot.SetActive(false);
+        gameplayRoot.SetActive(true);
+        PlayerScript.playing = true;
+        PlayerScript.gamesAmount++;
+    }
+
+    private void ShowMainMenuText()
+    {
+        textTempoRecorde.text = "Tempo recorde: " + PlayerScript.timeMinutesRecord + " : ";
+
+        if (PlayerScript.timeSecondsRecord < 10)
+        {
+            textTempoRecorde.text += "0" + PlayerScript.timeSecondsRecord.ToString();
+        }
+        else
+        {
+            textTempoRecorde.text += PlayerScript.timeSecondsRecord.ToString();
+        }
+
+        textVersion.text = "v" + Application.version;
+    }
+
     public void Sair()
     {
 #if !UNITY_EDITOR && (UNITY_STANDALONE || UNITY_WEBGL)
@@ -97,29 +126,5 @@ public class CanvasScript : MonoBehaviour
 #else
         EditorApplication.isPlaying = false;
 #endif
-    }
-
-    private void MostrarRecorde()
-    {
-        textTempoRecorde.text = "Tempo recorde: " + PlayerScript.tempoMinutosRecorde + " : ";
-
-        if (PlayerScript.tempoSegundosRecorde < 10)
-        {
-            textTempoRecorde.text += "0" + PlayerScript.tempoSegundosRecorde.ToString();
-        }
-        else
-        {
-            textTempoRecorde.text += PlayerScript.tempoSegundosRecorde.ToString();
-        }
-    }
-
-    private IEnumerator IniciarCoroutine()
-    {
-        yield return new WaitForSeconds(0.2f);
-
-        menuRoot.SetActive(false);
-        gameplayRoot.SetActive(true);
-        jogando = true;
-        PlayerScript.jogouQuantasVezes++;
     }
 }

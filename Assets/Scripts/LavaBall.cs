@@ -9,31 +9,31 @@ public class LavaBall : MonoBehaviour
     public GameObject criarNoImpacto;
     public AudioClip[] impulsoClip;
     public AudioClip[] impactoClip;
-
-    Rigidbody rb;
-    AudioSource audioSource;
-    PlayerScript scriptDojogador;
-    float velocidadeDeImpulso;
     public bool impulsionado = false;
+
+    private Rigidbody _rigidBody;
+    private AudioSource _audioSource;
+    private PlayerScript _playerScript;
+    private float _impulseStrength;
 
     void Start()
     {
-        scriptDojogador = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
-        rb = GetComponent<Rigidbody>();
-        rb.velocity = Vector3.up * Random.Range(9f, 12f) + Vector3.forward * scriptDojogador.velocidade;
-        audioSource = GetComponent<AudioSource>();
+        _playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        _rigidBody = GetComponent<Rigidbody>();
+        _rigidBody.velocity = Vector3.up * Random.Range(9f, 12f) + Vector3.forward * _playerScript.velocidade;
+        _audioSource = GetComponent<AudioSource>();
         chama.SetActive(false);
     }
 
-    public void Clicou()
+    public void Clicked()
     {
         // Bola foi clicada. Mudar velocidade com base no tempo que o jogador segurou o botão do mouse.
-        rb.velocity += Vector3.forward * (120f * ClickManager.tempoSegurandoMouse);
-        velocidadeDeImpulso = rb.velocity.magnitude;
+        _rigidBody.velocity += Vector3.forward * (120f * ClickManager.tempoSegurandoMouse);
+        _impulseStrength = _rigidBody.velocity.magnitude;
         chama.SetActive(true);
         impulsionado = true;
 
-        audioSource.PlayOneShot(impulsoClip[Random.Range(0, impulsoClip.Length)]);
+        _audioSource.PlayOneShot(impulsoClip[Random.Range(0, impulsoClip.Length)]);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -56,16 +56,16 @@ public class LavaBall : MonoBehaviour
 
             Instantiate(criarNoImpacto, transform.position, transform.rotation);
 
-            if (velocidadeDeImpulso > 80)
+            if (_impulseStrength > 80)
             {
                 // Se a bola for mais rápida, é mais efetiva.
                 Instantiate(ativarFisicaTrigger, transform.position, new Quaternion(0, 0, 0, 0));
-                audioSource.PlayOneShot(impactoClip[Random.Range(0, impactoClip.Length)], 0.1f);
-                velocidadeDeImpulso = 0f;
+                _audioSource.PlayOneShot(impactoClip[Random.Range(0, impactoClip.Length)], 0.1f);
+                _impulseStrength = 0f;
 
-                if (PlayerScript.levandoDano == false)
+                if (PlayerScript.takingDamage == false)
                 {
-                    scriptDojogador.scriptCameraShake.ShakeCamera(0.15f, 0.15f);
+                    _playerScript.scriptCameraShake.ShakeCamera(0.15f, 0.15f);
                 }
             }
         }

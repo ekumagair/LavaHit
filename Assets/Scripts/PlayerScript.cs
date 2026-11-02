@@ -31,34 +31,35 @@ public class PlayerScript : MonoBehaviour
     [Header("Som")]
     public AudioClip audioBateu;
 
-    AudioSource audioSource;
+    public static bool playing = false;
+    public static bool lost = false;
+    public static bool takingDamage = false;
+    public static bool closeToBarrier = false;
+    public static int gamesAmount = 0;
+    public static int timeSeconds = 0;
+    public static int timeMinutes = 0;
+    public static int timeSecondsRecord = 0;
+    public static int timeMinutesRecord = 0;
 
-    bool invulneravel = false;
-    public static bool levandoDano = false;
-    public static bool pertoDeBarreira = false;
-    public static bool perdeu = false;
-    public static int jogouQuantasVezes = 0;
-    public static int tempoSegundos = 0;
-    public static int tempoMinutos = 0;
-    public static int tempoSegundosRecorde = 0;
-    public static int tempoMinutosRecorde = 0;
+    private AudioSource _audioSource;
+    private bool _invulnerable = false;
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-        invulneravel = false;
-        pertoDeBarreira = false;
-        perdeu = false;
-        tempoSegundos = 0;
-        tempoMinutos = 0;
-        StartCoroutine(AumentarVelocidade());
-        StartCoroutine(Temporizador());
+        _audioSource = GetComponent<AudioSource>();
+        _invulnerable = false;
+        closeToBarrier = false;
+        lost = false;
+        timeSeconds = 0;
+        timeMinutes = 0;
+        StartCoroutine(IncreaseSpeed());
+        StartCoroutine(Timer());
     }
 
     void Update()
     {
         // Ir para frente.
-        if (CanvasScript.jogando == true && vida > 0)
+        if (playing == true && vida > 0)
         {
             transform.Translate(Vector3.forward * velocidade * Time.deltaTime);
         }
@@ -77,26 +78,26 @@ public class PlayerScript : MonoBehaviour
         // Não gerar bolas de lava se estiver muito perto de uma barreira.
         if (Physics.Raycast(transform.position, transform.forward, distanciaMinimaDaBarreira, layerBarreira))
         {
-            pertoDeBarreira = true;
+            closeToBarrier = true;
         }
         else
         {
-            pertoDeBarreira = false;
-            Debug.DrawLine(transform.position, transform.position + transform.forward * distanciaMinimaDaBarreira, Color.white, 0.2f);
+            closeToBarrier = false;
+            //Debug.DrawLine(transform.position, transform.position + transform.forward * distanciaMinimaDaBarreira, Color.white, 0.2f);
         }
 
         // Perder.
-        if (vida <= 0 && perdeu == false)
+        if (vida <= 0 && lost == false)
         {
-            perdeu = true;
-            StartCoroutine(Perdeu());
+            lost = true;
+            StartCoroutine(Lost());
         }
     }
 
-    IEnumerator AumentarVelocidade()
+    private IEnumerator IncreaseSpeed()
     {
         // Aumentar a velocidade automaticamente com o tempo.
-        while (CanvasScript.jogando == false)
+        while (playing == false)
         {
             // Esperar até o jogador clicar no botão de iniciar.
             yield return new WaitForEndOfFrame();
@@ -104,52 +105,52 @@ public class PlayerScript : MonoBehaviour
 
         yield return new WaitForSeconds(10f);
 
-        if (levandoDano == false)
+        if (takingDamage == false)
         {
             velocidade += 2;
             //Debug.Log("Aumentou a velocidade para " + velocidade);
         }
 
-        StartCoroutine(AumentarVelocidade());
+        StartCoroutine(IncreaseSpeed());
     }
 
-    IEnumerator Temporizador()
+    private IEnumerator Timer()
     {
         // Contar tempo.
         yield return new WaitForSeconds(1);
 
-        if (CanvasScript.jogando == true)
+        if (playing == true)
         {
-            if (levandoDano == false && invulneravel == false)
+            if (takingDamage == false && _invulnerable == false)
             {
-                tempoSegundos++;
+                timeSeconds++;
             }
 
-            if(tempoSegundos >= 60)
+            if (timeSeconds >= 60)
             {
-                tempoSegundos = 0;
-                tempoMinutos++;
+                timeSeconds = 0;
+                timeMinutes++;
             }
         }
 
-        StartCoroutine(Temporizador());
+        StartCoroutine(Timer());
     }
 
-    IEnumerator Perdeu()
+    private IEnumerator Lost()
     {
-        perdeu = true;
-        CanvasScript.jogando = false;
+        lost = true;
+        playing = false;
 
-        int tempoTotal = tempoSegundos + (tempoMinutos * 60);
-        int tempoTotalRecorde = tempoSegundosRecorde + (tempoMinutosRecorde * 60);
+        int tempoTotal = timeSeconds + (timeMinutes * 60);
+        int tempoTotalRecorde = timeSecondsRecord + (timeMinutesRecord * 60);
 
         if (tempoTotal > tempoTotalRecorde)
         {
-            tempoMinutosRecorde = tempoMinutos;
-            tempoSegundosRecorde = tempoSegundos;
+            timeMinutesRecord = timeMinutes;
+            timeSecondsRecord = timeSeconds;
 
-            PlayerPrefs.SetInt("recorde_minutos", tempoMinutosRecorde);
-            PlayerPrefs.SetInt("recorde_segundos", tempoSegundosRecorde);
+            PlayerPrefs.SetInt("recorde_minutos", timeMinutesRecord);
+            PlayerPrefs.SetInt("recorde_segundos", timeSecondsRecord);
             PlayerPrefs.Save();
         }
 
@@ -169,19 +170,19 @@ public class PlayerScript : MonoBehaviour
         if (collision.gameObject.tag == "Obstaculo" && collision.gameObject.GetComponent<Rigidbody>().constraints == RigidbodyConstraints.FreezeAll)
         {
             Instantiate(objetoTriggerAtivarFisica, transform.position, transform.rotation);
-            if (levandoDano == false && invulneravel == false)
+            if (takingDamage == false && _invulnerable == false)
             {
-                StartCoroutine(LevarDano());
+                StartCoroutine(TakeDamage());
             }
         }
     }
 
-    IEnumerator LevarDano()
+    private IEnumerator TakeDamage()
     {
         //Debug.Log("Levou dano");
 
-        levandoDano = true;
-        invulneravel = true;
+        takingDamage = true;
+        _invulnerable = true;
         
         ClickManager.tempoSegurandoMouse = 0f;
         scriptCameraShake.ShakeCamera(1.5f, 0.3f);
@@ -191,11 +192,11 @@ public class PlayerScript : MonoBehaviour
         Destroy(Instantiate(vidaEfeito, vidaIcone.transform), 1.4f);
         Destroy(Instantiate(danoOverlay, canvasObject.transform), 1.5f);
         Instantiate(danoEfeito, transform.position + (transform.forward * 2), new Quaternion(0, 0, 0, 0));
-        audioSource.PlayOneShot(audioBateu);
+        _audioSource.PlayOneShot(audioBateu);
 
         yield return new WaitForSeconds(1f);
 
-        levandoDano = false;
+        takingDamage = false;
 
         yield return new WaitForSeconds(2f);
 
@@ -203,6 +204,6 @@ public class PlayerScript : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        invulneravel = false;
+        _invulnerable = false;
     }
 }

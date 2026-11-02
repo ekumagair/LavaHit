@@ -13,27 +13,26 @@ public class ClickManager : MonoBehaviour
     public GameObject barraDeForca;
     public GameObject barraDeForcaEfeito;
 
-    PlayerScript scriptJogador;
-
-    float mainCamFovPadrao;
-
     // Por quanto tempo está segurando o botão.
     public static float tempoSegurandoMouse = 0f;
 
     // Tempo máximo de segurar o botão.
     public static float tempoMaxSegurandoMouse = 1f;
 
+    private PlayerScript _playerScript;
+    private float _mainCamFovDefault;
+
     void Start()
     {
         tempoSegurandoMouse = 0f;
-        mainCamFovPadrao = Camera.main.fieldOfView;
-        scriptJogador = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        _mainCamFovDefault = Camera.main.fieldOfView;
+        _playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         barraDeForcaEfeito.SetActive(false);
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonUp(0) && CanvasScript.jogando == true && scriptJogador.vida > 0 && PlayerScript.levandoDano == false)
+        if (Input.GetMouseButtonUp(0) && PlayerScript.playing == true && _playerScript.vida > 0 && PlayerScript.takingDamage == false)
         {
             // Soltou botão do mouse.
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -55,15 +54,15 @@ public class ClickManager : MonoBehaviour
                         Instantiate(efeitoImpacto[1], hit.transform.position, transform.rotation);
                     }
 
-                    scriptDoObj.Clicou();
-                    scriptJogador.velocidade += 0.25f;
+                    scriptDoObj.Clicked();
+                    _playerScript.velocidade += 0.25f;
                     scriptCameraShake.ShakeCamera(0.25f, tempoSegurandoMouse / 5);
                 }
             }
 
             tempoSegurandoMouse = 0f;
         }
-        else if (Input.GetMouseButton(0) && PlayerScript.levandoDano == false && CanvasScript.jogando == true && scriptJogador.vida > 0)
+        else if (Input.GetMouseButton(0) && PlayerScript.takingDamage == false && PlayerScript.playing == true && _playerScript.vida > 0)
         {
             // Segurando botão do mouse.
             if (tempoSegurandoMouse < tempoMaxSegurandoMouse)
@@ -71,7 +70,7 @@ public class ClickManager : MonoBehaviour
                 tempoSegurandoMouse += Time.deltaTime;
             }
 
-            if (Camera.main.fieldOfView > mainCamFovPadrao - 4)
+            if (Camera.main.fieldOfView > _mainCamFovDefault - 4)
             {
                 Camera.main.fieldOfView -= Time.deltaTime * 30f;
             }
@@ -92,7 +91,7 @@ public class ClickManager : MonoBehaviour
         else
         {
             // Não está segurando o botão do mouse.
-            if (Camera.main.fieldOfView < mainCamFovPadrao)
+            if (Camera.main.fieldOfView < _mainCamFovDefault)
             {
                 Camera.main.fieldOfView += Time.deltaTime * 80f;
             }

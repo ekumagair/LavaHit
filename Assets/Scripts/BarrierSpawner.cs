@@ -8,27 +8,27 @@ public class BarrierSpawner : MonoBehaviour
     public float distancia;
     public float delay;
 
-    GameObject jogador;
-    PlayerScript jogadorScript;
+    private GameObject _playerObj;
+    private PlayerScript _playerScript;
 
     void Start()
     {
-        jogador = GameObject.FindGameObjectWithTag("Player");
-        jogadorScript = jogador.GetComponent<PlayerScript>();
+        _playerObj = GameObject.FindGameObjectWithTag("Player");
+        _playerScript = _playerObj.GetComponent<PlayerScript>();
         StartCoroutine(Criar());
     }
 
     IEnumerator Criar()
     {
-        while (CanvasScript.jogando == false)
+        while (PlayerScript.playing == false)
         {
             // Esperar até o jogador clicar no botão de iniciar.
             yield return new WaitForEndOfFrame();
         }
 
-        Instantiate(barreiraPrefab[Random.Range(0, barreiraPrefab.Length)], new Vector3(0, 0, jogador.transform.position.z + distancia), transform.rotation);
+        Instantiate(barreiraPrefab[Random.Range(0, barreiraPrefab.Length)], new Vector3(0, 0, _playerObj.transform.position.z + distancia), transform.rotation);
 
-        yield return new WaitForSeconds(delay / (jogadorScript.velocidade / 3));
+        yield return new WaitForSeconds(delay / (_playerScript.velocidade / 3));
 
         StartCoroutine(Criar());
     }
