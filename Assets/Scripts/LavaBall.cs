@@ -7,12 +7,9 @@ public class LavaBall : MonoBehaviour
     public GameObject chama;
     public GameObject ativarFisicaTrigger;
     public GameObject criarNoImpacto;
-    public AudioClip[] impulsoClip;
-    public AudioClip[] impactoClip;
     public bool impulsionado = false;
 
     private Rigidbody _rigidBody;
-    private AudioSource _audioSource;
     private PlayerScript _playerScript;
     private float _impulseStrength;
 
@@ -21,7 +18,7 @@ public class LavaBall : MonoBehaviour
         _playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         _rigidBody = GetComponent<Rigidbody>();
         _rigidBody.velocity = Vector3.up * Random.Range(9f, 12f) + Vector3.forward * _playerScript.velocidade;
-        _audioSource = GetComponent<AudioSource>();
+
         chama.SetActive(false);
     }
 
@@ -33,7 +30,7 @@ public class LavaBall : MonoBehaviour
         chama.SetActive(true);
         impulsionado = true;
 
-        _audioSource.PlayOneShot(impulsoClip[Random.Range(0, impulsoClip.Length)]);
+        AudioManager.Instance.PlaySFXAtPosition(AudioManager.SFX.ImpactStone, transform.position);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -60,7 +57,7 @@ public class LavaBall : MonoBehaviour
             {
                 // Se a bola for mais rápida, é mais efetiva.
                 Instantiate(ativarFisicaTrigger, transform.position, new Quaternion(0, 0, 0, 0));
-                _audioSource.PlayOneShot(impactoClip[Random.Range(0, impactoClip.Length)], 0.1f);
+                AudioManager.Instance.PlaySFXAtPosition(AudioManager.SFX.StonesFalling, transform.position);
                 _impulseStrength = 0f;
 
                 if (PlayerScript.takingDamage == false)

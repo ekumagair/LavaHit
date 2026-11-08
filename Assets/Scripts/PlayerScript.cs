@@ -28,9 +28,6 @@ public class PlayerScript : MonoBehaviour
     public float distanciaIntervalo;
     public int distanciaDeCriacao = 2;
 
-    [Header("Som")]
-    public AudioClip audioBateu;
-
     public static bool playing = false;
     public static bool lost = false;
     public static bool takingDamage = false;
@@ -41,12 +38,10 @@ public class PlayerScript : MonoBehaviour
     public static int timeSecondsRecord = 0;
     public static int timeMinutesRecord = 0;
 
-    private AudioSource _audioSource;
     private bool _invulnerable = false;
 
     void Start()
     {
-        _audioSource = GetComponent<AudioSource>();
         _invulnerable = false;
         closeToBarrier = false;
         lost = false;
@@ -192,7 +187,8 @@ public class PlayerScript : MonoBehaviour
         Destroy(Instantiate(vidaEfeito, vidaIcone.transform), 1.4f);
         Destroy(Instantiate(danoOverlay, canvasObject.transform), 1.5f);
         Instantiate(danoEfeito, transform.position + (transform.forward * 2), new Quaternion(0, 0, 0, 0));
-        _audioSource.PlayOneShot(audioBateu);
+
+        AudioManager.Instance.PlaySFX(AudioManager.SFX.DroppingRocks);
 
         yield return new WaitForSeconds(1f);
 
