@@ -757,6 +757,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeIn: {fileID: 710911864043624072, guid: 6b6b66a46e2fb994e8056bb1b70a7c61, type: 3}
   fadeOut: {fileID: 710911864043624072, guid: 5f22d0614c356d74cbc204a019381f8e, type: 3}
+  gameOverText: {fileID: 9086528847751850780, guid: 197e2d27998f69348a8741bfd743ccfe, type: 3}
   mainMenuScreen: {fileID: 7171321456461764997}
   optionsScreen: {fileID: 8026758543277016436}
   creditsScreen: {fileID: 4046734660402805066}
@@ -6266,11 +6267,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4591866458980463936, guid: 8b22d0b9e6e217a49bff7a320ca81772, type: 3}
       propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
-      value: 1210549207040
+      value: 350933101510656
       objectReference: {fileID: 0}
     - target: {fileID: 4591866458980463936, guid: 8b22d0b9e6e217a49bff7a320ca81772, type: 3}
       propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
-      value: GUID:a02f7840cda71f946933fbf379f7dddb
+      value: GUID:2c6fb63c69c285340922acd9f5c2b711
       objectReference: {fileID: 0}
     - target: {fileID: 8728902307181402857, guid: 8b22d0b9e6e217a49bff7a320ca81772, type: 3}
       propertyPath: m_text

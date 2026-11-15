@@ -7,6 +7,7 @@ public class CanvasManager : MonoBehaviour
     [Header("Prefabs")]
     public GameObject fadeIn;
     public GameObject fadeOut;
+    public GameObject gameOverText;
 
     [Header("Screens")]
     public MainMenuScreen mainMenuScreen;
@@ -29,6 +30,16 @@ public class CanvasManager : MonoBehaviour
 
     void Start()
     {
+        /*
+        if (PlayerPrefs.HasKey("recorde_minutos"))
+        {
+            PlayerScript.timeMinutesRecord = PlayerPrefs.GetInt("recorde_minutos");
+            PlayerScript.timeSecondsRecord = PlayerPrefs.GetInt("recorde_segundos");
+            PlayerPrefs.Save();
+        }*/
+
+        SaveManager.Load();
+
         GoToMainMenuScreen();
         FadeOut();
     }
@@ -43,6 +54,11 @@ public class CanvasManager : MonoBehaviour
         Destroy(Instantiate(fadeOut, transform), 1f);
     }
 
+    public void ShowGameOverText()
+    {
+        Instantiate(gameOverText, transform);
+    }
+
     public void HideAllScreens()
     {
         mainMenuScreen.gameObject.SetActive(false);
@@ -55,6 +71,7 @@ public class CanvasManager : MonoBehaviour
     {
         HideAllScreens();
         mainMenuScreen.gameObject.SetActive(true);
+        mainMenuScreen.ShowText();
     }
 
     public void GoToOptionsScreen()

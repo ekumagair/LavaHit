@@ -13,14 +13,6 @@ public class MainMenuScreen : MonoBehaviour
     {
         PlayerScript.playing = false;
 
-        // Carregar recorde salvo.
-        if (PlayerPrefs.HasKey("recorde_minutos"))
-        {
-            PlayerScript.timeMinutesRecord = PlayerPrefs.GetInt("recorde_minutos");
-            PlayerScript.timeSecondsRecord = PlayerPrefs.GetInt("recorde_segundos");
-            PlayerPrefs.Save();
-        }
-
         ShowText();
     }
 
@@ -29,11 +21,17 @@ public class MainMenuScreen : MonoBehaviour
         // Deletar dados salvos.
         if (Input.GetKeyDown(KeyCode.Delete))
         {
+            /*
             PlayerScript.timeMinutesRecord = 0;
             PlayerScript.timeSecondsRecord = 0;
             PlayerPrefs.SetInt("recorde_minutos", 0);
             PlayerPrefs.SetInt("recorde_segundos", 0);
-            PlayerPrefs.Save();
+            PlayerPrefs.Save();*/
+
+            PlayerScript.timeMinutesRecord = 0;
+            PlayerScript.timeSecondsRecord = 0;
+            SaveManager.Save();
+
             ShowText();
         }
 
@@ -44,7 +42,7 @@ public class MainMenuScreen : MonoBehaviour
         }
     }
 
-    private void ShowText()
+    public void ShowText()
     {
         textRecordTime.text = PlayerScript.timeMinutesRecord.ToString() + ":";
 

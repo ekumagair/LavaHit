@@ -22,7 +22,7 @@ public class OptionsManager : MonoBehaviour
         Instance = this;
     }
 
-    public int GetLanguage(string locale)
+    public int GetLanguageIndex(string locale)
     {
         switch (locale)
         {
@@ -34,7 +34,7 @@ public class OptionsManager : MonoBehaviour
         }
     }
 
-    public string GetLanguage(int index)
+    public string GetLanguageString(int index)
     {
         switch (index)
         {
@@ -62,9 +62,14 @@ public class OptionsManager : MonoBehaviour
 
     public void SetLanguage(string language)
     {
+        if (string.IsNullOrEmpty(language))
+            return;
+
         Locale locale = LocalizationSettings.AvailableLocales.GetLocale(language);
         LocalizationSettings.SelectedLocale = locale;
     }
+
+    public string CurrentLanguage => LocalizationSettings.SelectedLocale.Identifier.Code;
 
     public float GetMasterVolume() => GetVolume("MasterVolume");
     public void SetMasterVolume(float value) => SetVolume("MasterVolume", value);

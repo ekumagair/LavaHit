@@ -27,7 +27,7 @@ public class OptionsScreen : MonoBehaviour
 
     public void GetSettings()
     {
-        optionLanguage.SetValue(OptionsManager.Instance.GetLanguage(LocalizationSettings.SelectedLocale.Identifier.Code));
+        optionLanguage.SetValue(OptionsManager.Instance.GetLanguageIndex(OptionsManager.Instance.CurrentLanguage));
         optionMasterVolume.SetValue(OptionsManager.Instance.GetMasterVolume());
         optionSfxVolume.SetValue(OptionsManager.Instance.GetSFXVolume());
         optionMusicVolume.SetValue(OptionsManager.Instance.GetMusicVolume());
@@ -55,6 +55,7 @@ public class OptionsScreen : MonoBehaviour
 
     public void Back()
     {
+        SaveManager.Save();
         CanvasManager.Instance.GoToMainMenuScreen();
     }
 }

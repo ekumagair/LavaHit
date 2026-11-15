@@ -17,10 +17,7 @@ public class PlayerScript : MonoBehaviour
     public GameObject danoOverlay;
     public GameObject danoEfeito;
 
-    [Header("Fim de jogo")]
-    public GameObject textFimDeJogo;
-
-    [Header("Criação do cenário")]
+    [Header("Scenery generation")]
     public GameObject chaoPrefab;
     public GameObject[] chaoAtual;
     public float proximaDistancia = 0;
@@ -42,10 +39,12 @@ public class PlayerScript : MonoBehaviour
     void Start()
     {
         _invulnerable = false;
+
         closeToBarrier = false;
         lost = false;
         timeSeconds = 0;
         timeMinutes = 0;
+
         StartCoroutine(IncreaseSpeed());
         StartCoroutine(Timer());
     }
@@ -143,12 +142,14 @@ public class PlayerScript : MonoBehaviour
             timeMinutesRecord = timeMinutes;
             timeSecondsRecord = timeSeconds;
 
+            /*
             PlayerPrefs.SetInt("recorde_minutos", timeMinutesRecord);
             PlayerPrefs.SetInt("recorde_segundos", timeSecondsRecord);
-            PlayerPrefs.Save();
+            PlayerPrefs.Save();*/
         }
 
-        Instantiate(textFimDeJogo, canvasObject.transform);
+        SaveManager.Save();
+        CanvasManager.Instance.ShowGameOverText();
 
         yield return new WaitForSeconds(4f);
 
@@ -164,6 +165,7 @@ public class PlayerScript : MonoBehaviour
         if (collision.gameObject.tag == "Obstaculo" && collision.gameObject.GetComponent<Rigidbody>().constraints == RigidbodyConstraints.FreezeAll)
         {
             Instantiate(objetoTriggerAtivarFisica, transform.position, transform.rotation);
+
             if (takingDamage == false && _invulnerable == false)
             {
                 StartCoroutine(TakeDamage());
