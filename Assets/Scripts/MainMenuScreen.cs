@@ -46,7 +46,7 @@ public class MainMenuScreen : MonoBehaviour
 
     private void ShowText()
     {
-        textRecordTime.text = "Tempo recorde: " + PlayerScript.timeMinutesRecord + ":";
+        textRecordTime.text = PlayerScript.timeMinutesRecord.ToString() + ":";
 
         if (PlayerScript.timeSecondsRecord < 10)
         {
@@ -70,6 +70,11 @@ public class MainMenuScreen : MonoBehaviour
     public void GoToOptions()
     {
         CanvasManager.Instance.GoToOptionsScreen();
+    }
+
+    public void GoToCredits()
+    {
+        CanvasManager.Instance.GoToCreditsScreen();
     }
 
     public void QuitGame()

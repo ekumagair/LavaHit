@@ -5,11 +5,13 @@ using UnityEngine;
 public class CanvasManager : MonoBehaviour
 {
     [Header("Prefabs")]
+    public GameObject fadeIn;
     public GameObject fadeOut;
 
     [Header("Screens")]
     public MainMenuScreen mainMenuScreen;
     public OptionsScreen optionsScreen;
+    public CreditsScreen creditsScreen;
     public GameplayCanvas gameplayCanvas;
 
     public static CanvasManager Instance { private set; get; }
@@ -28,11 +30,12 @@ public class CanvasManager : MonoBehaviour
     void Start()
     {
         GoToMainMenuScreen();
+        FadeOut();
+    }
 
-        if (PlayerScript.gamesAmount > 0)
-        {
-            FadeOut();
-        }
+    public void FadeIn()
+    {
+        Instantiate(fadeIn, transform);
     }
 
     public void FadeOut()
@@ -40,24 +43,35 @@ public class CanvasManager : MonoBehaviour
         Destroy(Instantiate(fadeOut, transform), 1f);
     }
 
-    public void GoToMainMenuScreen()
+    public void HideAllScreens()
     {
-        mainMenuScreen.gameObject.SetActive(true);
+        mainMenuScreen.gameObject.SetActive(false);
         gameplayCanvas.gameObject.SetActive(false);
         optionsScreen.gameObject.SetActive(false);
+        creditsScreen.gameObject.SetActive(false);
+    }
+
+    public void GoToMainMenuScreen()
+    {
+        HideAllScreens();
+        mainMenuScreen.gameObject.SetActive(true);
     }
 
     public void GoToOptionsScreen()
     {
-        mainMenuScreen.gameObject.SetActive(false);
-        gameplayCanvas.gameObject.SetActive(false);
+        HideAllScreens();
         optionsScreen.gameObject.SetActive(true);
     }
 
     public void GoToGameplayCanvas()
     {
-        mainMenuScreen.gameObject.SetActive(false);
+        HideAllScreens();
         gameplayCanvas.gameObject.SetActive(true);
-        optionsScreen.gameObject.SetActive(false);
+    }
+
+    public void GoToCreditsScreen()
+    {
+        HideAllScreens();
+        creditsScreen.gameObject.SetActive(true);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Button))]
 public class ButtonComplement : MonoBehaviour
 {
     public AudioManager.SFX sfxOnClick = AudioManager.SFX.ButtonMechanical;

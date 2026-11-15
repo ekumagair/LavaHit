@@ -19,7 +19,6 @@ public class PlayerScript : MonoBehaviour
 
     [Header("Fim de jogo")]
     public GameObject textFimDeJogo;
-    public GameObject fadeIn;
 
     [Header("Criação do cenário")]
     public GameObject chaoPrefab;
@@ -153,7 +152,7 @@ public class PlayerScript : MonoBehaviour
 
         yield return new WaitForSeconds(4f);
 
-        Instantiate(fadeIn, canvasObject.transform);
+        CanvasManager.Instance.FadeIn();
 
         yield return new WaitForSeconds(1.1f);
 

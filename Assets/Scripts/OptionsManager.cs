@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 public class OptionsManager : MonoBehaviour
 {
@@ -18,6 +20,50 @@ public class OptionsManager : MonoBehaviour
         }
 
         Instance = this;
+    }
+
+    public int GetLanguage(string locale)
+    {
+        switch (locale)
+        {
+            default:
+            case "en":
+                return 0;
+            case "pt-BR":
+                return 1;
+        }
+    }
+
+    public string GetLanguage(int index)
+    {
+        switch (index)
+        {
+            default:
+            case 0:
+                return "en";
+            case 1:
+                return "pt-BR";
+        }
+    }
+
+    public void SetLanguage(int index)
+    {
+        switch (index)
+        {
+            default:
+            case 0:
+                SetLanguage("en");
+                break;
+            case 1:
+                SetLanguage("pt-BR");
+                break;
+        }
+    }
+
+    public void SetLanguage(string language)
+    {
+        Locale locale = LocalizationSettings.AvailableLocales.GetLocale(language);
+        LocalizationSettings.SelectedLocale = locale;
     }
 
     public float GetMasterVolume() => GetVolume("MasterVolume");

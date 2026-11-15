@@ -2,9 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 public class OptionsScreen : MonoBehaviour
 {
+    [Header("Components")]
+    public OptionDropdown optionLanguage;
     public OptionSlider optionMasterVolume;
     public OptionSlider optionSfxVolume;
     public OptionSlider optionMusicVolume;
@@ -24,9 +27,15 @@ public class OptionsScreen : MonoBehaviour
 
     public void GetSettings()
     {
+        optionLanguage.SetValue(OptionsManager.Instance.GetLanguage(LocalizationSettings.SelectedLocale.Identifier.Code));
         optionMasterVolume.SetValue(OptionsManager.Instance.GetMasterVolume());
         optionSfxVolume.SetValue(OptionsManager.Instance.GetSFXVolume());
         optionMusicVolume.SetValue(OptionsManager.Instance.GetMusicVolume());
+    }
+
+    public void OnLanguageChanged(int index)
+    {
+        OptionsManager.Instance.SetLanguage(index);
     }
 
     public void OnMasterVolumeChanged(float value)
