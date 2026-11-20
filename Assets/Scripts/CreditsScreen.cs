@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class CreditsScreen : MonoBehaviour
 {
+    void Update()
+    {
+        /*
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Back();
+        }*/
+    }
+
     public void Back()
     {
         CanvasManager.Instance.GoToMainMenuScreen();

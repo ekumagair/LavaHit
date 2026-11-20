@@ -34,6 +34,13 @@ public static class SaveManager
         OptionsManager.Instance.SetMusicVolume(loadedData.musicVolume);
 
         OptionsManager.Instance.SetLanguage(loadedData.languageCode);
+
+        OptionsManager.Instance.PostProcessWeight = loadedData.postProcessWeight;
+        OptionsManager.Instance.PostProcessBloom = loadedData.postProcessBloom;
+        OptionsManager.Instance.PostProcessAmbientOcclusion = loadedData.postProcessAmbientOcclusion;
+        OptionsManager.Instance.PostProcessMotionBlur = loadedData.postProcessMotionBlur;
+        OptionsManager.Instance.PostProcessColorGrading = loadedData.postProcessColorGrading;
+        OptionsManager.Instance.PostProcessChromaticAberration = loadedData.postProcessChromaticAberration;
     }
 
     public static void Delete()

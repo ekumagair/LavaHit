@@ -43,6 +43,34 @@ MonoBehaviour:
     m_Key: SAVE_RETURN
     m_Metadata:
       m_Items: []
+  - m_Id: 1965629369942016
+    m_Key: POST_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1965502995562496
+    m_Key: POST_WEIGHT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1965707425939456
+    m_Key: POST_BLOOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1965752757977088
+    m_Key: POST_AMBIENT_OCC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1966072233918464
+    m_Key: POST_MOTION_BLUR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1966176961495040
+    m_Key: POST_COLOR_GRAD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1966249611034624
+    m_Key: POST_CHROMATIC
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

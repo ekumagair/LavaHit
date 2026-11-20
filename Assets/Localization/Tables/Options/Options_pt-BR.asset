@@ -46,6 +46,34 @@ MonoBehaviour:
     m_Localized: Salvar e voltar
     m_Metadata:
       m_Items: []
+  - m_Id: 1965502995562496
+    m_Localized: Intensidade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1965629369942016
+    m_Localized: "P\xF3s-processamento"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1965707425939456
+    m_Localized: Bloom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1965752757977088
+    m_Localized: "Oclus\xE3o ambiental"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1966072233918464
+    m_Localized: Desfoque de movimento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1966176961495040
+    m_Localized: "Corre\xE7\xE3o de cor"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1966249611034624
+    m_Localized: "Aberra\xE7\xE3o crom\xE1tica"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

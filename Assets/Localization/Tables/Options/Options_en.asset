@@ -46,6 +46,34 @@ MonoBehaviour:
     m_Localized: Save and return
     m_Metadata:
       m_Items: []
+  - m_Id: 1965502995562496
+    m_Localized: Intensity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1965629369942016
+    m_Localized: Post-processing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1965707425939456
+    m_Localized: Bloom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1965752757977088
+    m_Localized: Ambient occlusion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1966072233918464
+    m_Localized: Motion blur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1966176961495040
+    m_Localized: Color grading
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1966249611034624
+    m_Localized: Chromatic aberration
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

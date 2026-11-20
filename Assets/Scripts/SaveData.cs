@@ -19,6 +19,13 @@ public class SaveData
     public int languageIndex;
     public string languageCode;
 
+    public float postProcessWeight;
+    public bool postProcessBloom;
+    public bool postProcessAmbientOcclusion;
+    public bool postProcessMotionBlur;
+    public bool postProcessColorGrading;
+    public bool postProcessChromaticAberration;
+
     public SaveData()
     {
         saveVersion = SaveManager.SAVE_VERSION;
@@ -33,5 +40,12 @@ public class SaveData
 
         languageIndex = OptionsManager.Instance.GetLanguageIndex(OptionsManager.Instance.CurrentLanguage);
         languageCode = OptionsManager.Instance.CurrentLanguage;
+
+        postProcessWeight = PostProcessingManager.Instance.Weight;
+        postProcessBloom = PostProcessingManager.Instance.Bloom.active;
+        postProcessAmbientOcclusion = PostProcessingManager.Instance.AmbientOcclusion.active;
+        postProcessMotionBlur = PostProcessingManager.Instance.MotionBlur.active;
+        postProcessColorGrading = PostProcessingManager.Instance.ColorGrading.active;
+        postProcessChromaticAberration = PostProcessingManager.Instance.ChromaticAberration.active;
     }
 }

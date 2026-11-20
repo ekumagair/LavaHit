@@ -20,6 +20,7 @@ public class OptionsManager : MonoBehaviour
         }
 
         Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public int GetLanguageIndex(string locale)
@@ -95,4 +96,11 @@ public class OptionsManager : MonoBehaviour
         float volume = Mathf.Log10(Mathf.Max(value, 0.0001f)) * 20f;
         audioMixer.SetFloat(parameter, volume);
     }
+
+    public float PostProcessWeight { get; set; } = 1.0f;
+    public bool PostProcessBloom { get; set; } = true;
+    public bool PostProcessAmbientOcclusion { get; set; } = true;
+    public bool PostProcessMotionBlur { get; set; } = true;
+    public bool PostProcessColorGrading { get; set; } = true;
+    public bool PostProcessChromaticAberration { get; set; } = true;
 }
